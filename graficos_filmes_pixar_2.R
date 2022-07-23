@@ -31,17 +31,20 @@ fp1 <- fp %>%
             sd = sd(nota_rotten_tomatoes)) %>%
   drop_na()
 View(fp1)
+glimpse(fp1)
+fp1$resultado <- as.factor(fp1$resultado)
 
-g1 <- ggplot(fp, aes(x = fct_reorder(resultado, media), 
+g1 <- ggplot(fp1, aes(x = resultado, 
              y = media)) +
-  geom_col(fill = "#66c2a5") +
-  labs(x = "Filmes", y = "Notas Rotten Tomatoes") +
-  theme(axis.text.x = element_text(size = 12, color = "black", 
-                                 angle = 40),
+  geom_col(fill = "#af8dc3") +
+  geom_errorbar(aes(x = resultado, 
+             y = media, ymin = media - sd, ymax = media + sd),
+             size = 0.85, width = 0.3) +
+  labs(x = "Resultados", y = "Notas Rotten Tomatoes") +
+  theme(axis.text.x = element_text(size = 12, color = "black"),
         axis.text.y = element_text(size = 12, color = "black"),
         axis.title = element_text(size = 15, color = "black")) +
-  scale_y_continuous(expand = expansion(mult = c(0, .1))) +
-  coord_flip()
+  scale_y_continuous(expand = expansion(mult = c(0, .1)))
 g1
 
 fp2 <- fp %>%
@@ -51,15 +54,16 @@ fp2 <- fp %>%
   drop_na()
 View(fp2)
 
-g2 <- ggplot(fp1, aes(x = fct_reorder(tipo_premio_indicado, 
-                                     nota_rotten_tomatoes), 
-             y = nota_rotten_tomatoes)) +
-  geom_col(fill = "#66c2a5") +
+g2 <- ggplot(fp2, aes(x = fct_reorder(tipo_premio_indicado, media),
+                       media)) +
+  geom_col(fill = "#7fbf7b") +
+  geom_errorbar(aes(x = tipo_premio_indicado, 
+             y = media, ymin = media - sd, ymax = media + sd),
+             size = 0.85, width = 0.3) +
   labs(x = "Filmes", y = "Notas Rotten Tomatoes") +
   theme(axis.text.x = element_text(size = 12, color = "black", 
                                  angle = 40),
         axis.text.y = element_text(size = 12, color = "black"),
         axis.title = element_text(size = 15, color = "black")) +
-  scale_y_continuous(expand = expansion(mult = c(0, .1))) +
-  coord_flip()
+  scale_y_continuous(expand = expansion(mult = c(0, .1)))
 g2
