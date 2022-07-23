@@ -60,10 +60,12 @@ g2 <- ggplot(fp2, aes(x = fct_reorder(tipo_premio_indicado, media),
   geom_errorbar(aes(x = tipo_premio_indicado, 
              y = media, ymin = media - sd, ymax = media + sd),
              size = 0.85, width = 0.3) +
-  labs(x = "Filmes", y = "Notas Rotten Tomatoes") +
-  theme(axis.text.x = element_text(size = 12, color = "black", 
-                                 angle = 40),
+  labs(x = "Tipo de premiação", y = "Notas Rotten Tomatoes") +
+  theme(axis.text.x = element_text(size = 12, color = "black"),
         axis.text.y = element_text(size = 12, color = "black"),
         axis.title = element_text(size = 15, color = "black")) +
-  scale_y_continuous(expand = expansion(mult = c(0, .1)))
+  scale_y_continuous(expand = expansion(mult = c(0, .1))) +
+  coord_flip()
 g2
+
+grid.arrange(g1, g2)
